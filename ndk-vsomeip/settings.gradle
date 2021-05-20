@@ -1,0 +1,3 @@
+include ':someiplib'
+include ':app'
+rootProject.name = "vsomeip"

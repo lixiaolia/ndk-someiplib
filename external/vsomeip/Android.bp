@@ -1,0 +1,147 @@
+libvsomeip_srcs = [
+   "implementation/endpoints/**/*.cpp",
+   "implementation/logging/**/*.cpp",
+   "implementation/tracing/**/*.cpp",
+   "implementation/message/**/*.cpp",
+   "implementation/routing/**/*.cpp",
+   "implementation/runtime/**/*.cpp",
+   "implementation/utility/**/*.cpp",
+   "implementation/plugin/**/*.cpp",
+   "implementation/security/**/*.cpp",
+   "implementation/logger/**/*.cpp",
+]
+
+libvsomeip_cfg_srcs = [
+    "implementation/configuration/src/*.cpp",
+]
+
+libvsomeip_e2e_srcs = [
+    "implementation/e2e_protection/src/*.cpp",
+]
+
+libvsomeip_sd_srcs = [
+    "implementation/service_discovery/src/*.cpp",
+]
+
+cc_defaults {
+    name: "vsomeip_defaults",
+    cppflags: [
+        "-std=c++11",
+        "-fexceptions",
+        "-Wno-non-virtual-dtor",
+        "-Wno-unused-const-variable",
+        "-Wno-unused-parameter",
+        "-Wno-unused-private-field",
+        "-Wno-unused-lambda-capture",
+        "-Wno-unused-variable",
+        "-Wno-unused-local-typedef",
+        "-Wno-sign-compare",
+        "-Wno-format",
+        "-Wno-header-guard",
+        "-Wno-overloaded-virtual",
+        "-Wno-implicit-fallthrough"
+    ]
+}
+
+cc_library_shared {
+    name: "libvsomeip3",
+    vendor: true,
+
+    srcs: libvsomeip_srcs,
+
+    defaults: [
+        "vsomeip_defaults"
+    ],
+
+    cflags: [
+        "-DWITHOUT_SYSTEMD"
+    ],
+
+    rtti: true,
+
+    local_include_dirs: [
+        "interface",
+        "implementation/helper/1.70"
+    ],
+
+    export_include_dirs: [
+	"interface"
+    ],
+
+    shared_libs: [
+        "libboost_system",
+        "libboost_thread",
+        "libboost_filesystem",
+        "liblog",
+        "libutils"
+    ]
+}
+
+cc_library_shared {
+    name: "libvsomeip3-cfg",
+    vendor: true,
+
+    srcs: libvsomeip_cfg_srcs,
+
+    defaults: [
+        "vsomeip_defaults"
+    ],
+
+    rtti: true,
+
+    local_include_dirs: [
+        "interface",
+        "implementation/helper/1.70"
+    ],
+
+    shared_libs: [
+        "libvsomeip3",
+        "libboost_system",
+        "libboost_filesystem"
+    ]
+}
+
+cc_library_shared {
+    name: "libvsomeip3-e2e",
+    vendor: true,
+
+    srcs: libvsomeip_e2e_srcs,
+
+    defaults: [
+        "vsomeip_defaults"
+    ],
+
+    rtti: true,
+
+    local_include_dirs: [
+        "interface",
+        "implementation/helper/1.70"
+    ],
+
+    shared_libs: [
+       "libvsomeip3"
+    ]
+}
+
+cc_library_shared {
+    name: "libvsomeip3-sd",
+    vendor: true,
+
+    srcs: libvsomeip_sd_srcs,
+
+    defaults: [
+        "vsomeip_defaults"
+    ],
+
+    rtti: true,
+
+    local_include_dirs: [
+        "interface",
+        "implementation/helper/1.70"
+    ],
+
+    shared_libs: [
+        "libvsomeip3",
+        "libboost_thread"
+    ]
+}
