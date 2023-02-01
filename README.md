@@ -2,20 +2,28 @@
 SOMEIP Java API.
 
 ## Environment
-- Android Studio 4.1.2 (Gradle 6.5, JDK 1.8)
-- CMake 3.17.2 (for boost-cmake)
+- Android Studio
+- CMake 3.x (for boost-cmake)
 
 ## Dependencies
-- boost 1.71.0 (https://boostorg.jfrog.io/artifactory/main/release/1.71.0/source/)
-- vsomeip3 : (https://github.com/GENIVI/vsomeip.git).
+The following dependencies are handled with git submodules:
+
+- vsomeip : (https://github.com/COVESA/vsomeip.git).
 - boost-cmake: Used CMake adapted boost (https://github.com/Orphis/boost-cmake).
 
-## Make Jar
+Initialize the dependencies with the following command:
+```
+git submodule update --init
+```
+
+## First time build
 
 ```bash
 cd ndk-vsomeip
-./gradlew makeJar
+./gradlew build
 ```
+
+Depending on your machine, this will take some minutes to compile the native libraries.
 
 
 ## Run Demo App in Android Studio
@@ -23,6 +31,7 @@ cd ndk-vsomeip
 2. Then open ndk-vsomeip
 3. Build and run
 4. Expected App output in Logcat:
+   
 ```
 D/MainActivity: vsomeipBaseDir: /data/user/0/com.lxl.someipdemo/cache/vsomeip
     Os.getenv("VSOMEIP_BASE_PATH"): /data/user/0/com.lxl.someipdemo/cache/vsomeip/
@@ -105,4 +114,3 @@ I/.lxl.someipdem: Client [100] is closing connection to [101]
 D/DemoService: SomeIP Service stop.
 D/DemoService: onDestroy()
 ```
-

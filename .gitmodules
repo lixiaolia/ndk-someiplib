@@ -1,0 +1,6 @@
+[submodule "external/vsomeip"]
+	path = external/vsomeip
+	url = https://github.com/COVESA/vsomeip.git
+[submodule "external/boost-cmake"]
+	path = external/boost-cmake
+	url = https://github.com/Orphis/boost-cmake.git
